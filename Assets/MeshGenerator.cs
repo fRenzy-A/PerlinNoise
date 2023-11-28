@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 
@@ -9,87 +10,77 @@ public class MeshGenerator : MonoBehaviour
 
     Mesh mesh;
 
-    Vector3[] vertices;
+
+    public Vector3[] vertices;
     int[] triangles;
 
     public List<Vector3> indiVert = new();
-    public List<int> indiTri = new List<int>();
+    public List<int[]> indiTri = new List<int[]>();
 
+    public int planeWidth;
+    public int planeHeight;
 
+    public TerrainGenerator terrainGenerator;
 
-    int planeWidth = 5;
-    int planeHeight = 5;
-
+    public float  theHeight;
     // Start is called before the first frame update
     void Start()
     {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
-
-        CreatePlane();
-        UpdateMesh();
-
-    }
-
-    void CreateQuad()
-    {
-        //really weird because unity operates on tris so technically i have to make quads manually
-
-
         
+        //terrainGenerator = gameObject.GetComponent<TerrainGenerator>();
     }
 
-    void CreatePlane()
+    public void CreatePlane()
     {
+
         for (int x = 0; x <= planeWidth; x++)
         {
             for (int y = 0; y <= planeHeight; y++)
             {
 
-                indiVert.Add(new Vector3(x, 0, y));
-                indiVert.Add(new Vector3(x + 1, 0, y));
+                //theHeight = terrainGenerator.terrainWorldHeight;
+                indiVert.Add(new Vector3(y, 0, x));
             }
+
         }
-        triangles = new int[]
-                {
-                    0, 1, 2,
-                    1, 3, 2,
-                };
+        vertices = indiVert.ToArray();
 
-        /*vertices = new Vector3[]
-                {
-                    new Vector3(0, 0, 0),
-                    new Vector3(0, 0, 1),
-                    new Vector3(1, 0, 0),
-                    new Vector3(1, 0, 1),
-                    new Vector3(2, 0, 0),
-                    new Vector3(2, 0, 1),
 
-                };
-        triangles = new int[]
-                {
-                    0, 1, 2,
-                    1, 3, 2,
-                    2,3,4,
-                    3,5,4
-                }; */
+        triangles = new int[(planeWidth * planeHeight) * 6];
+
+        int height = planeHeight;
+        int tri = 0;
+        for (int x = 0; x < planeHeight; x++)
+        {
+            
+            for (int y = 0; y < planeWidth; y++)
+            {
+
+                triangles[tri] = (x*(height+1)) + y;
+                triangles[tri + 1] = (x * (height + 1)) + (planeWidth + 1) + y;
+                triangles[tri + 2] = (x * (height + 1)) + 1 + y;
+                triangles[tri + 3] = (x * (height + 1)) + (planeWidth + 1) + y;
+                triangles[tri + 4] = (x * (height + 1)) + (planeWidth + 2) + y;
+                triangles[tri + 5] = (x * (height + 1)) + 1 + y;
+
+                tri += 6;
+            }
+
+        }
     }
-    void UpdateMesh()
+    public void UpdateMesh()
     {
         mesh.Clear();
 
-
-        /*foreach(Vector3[] v in plane)
-        {
-            mesh.vertices = v;
-           
-        }
-        mesh.triangles = triangles;*/
-
+        
         mesh.vertices = vertices;
         mesh.triangles = triangles;
-
+        terrainGenerator.AddTerrainColor(vertices, mesh);
         mesh.RecalculateNormals();
+
+        
     }
 
     // Update is called once per frame
