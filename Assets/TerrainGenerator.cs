@@ -15,7 +15,11 @@ public class TerrainGenerator : MonoBehaviour
 
     public float scale;
     public float octave;
+    public float power;
     public float terrainWorldHeight;
+
+
+    
     void Start()
     {
         meshGenerator.CreatePlane();
@@ -43,9 +47,11 @@ public class TerrainGenerator : MonoBehaviour
 
             for (int y=0; y <= mY; y++)
             {
+                float noiser;
                 float noiseX = xRan + x / (float)mX * scale;
                 float noiseY = yRan + y / (float)mY * scale;
-                meshGenerator.vertices[Xe].y = Mathf.PerlinNoise(noiseX + (octave*noiseX), noiseY + (octave*noiseY)) * terrainWorldHeight;
+                noiser = Mathf.PerlinNoise(noiseX, noiseY) * terrainWorldHeight;
+                meshGenerator.vertices[Xe].y = Mathf.Pow((1* noiser + (0.5f * noiser*2) + (0.25f * noiser*4)) /(1f + 0.5f + 0.25f),power);
                 Xe += 1;
                 planeY++;
             }
