@@ -50,8 +50,8 @@ public class TerrainGenerator : MonoBehaviour
                 float noiser;
                 float noiseX = xRan + x / (float)mX * scale;
                 float noiseY = yRan + y / (float)mY * scale;
-                noiser = Mathf.PerlinNoise(noiseX, noiseY) * terrainWorldHeight;
-                meshGenerator.vertices[Xe].y = Mathf.Pow((1* noiser + (0.5f * noiser*2) + (0.25f * noiser*4)) /(1f + 0.5f + 0.25f),power);
+                noiser = Mathf.PerlinNoise(noiseX, noiseY);
+                meshGenerator.vertices[Xe].y = Mathf.Pow((Mathf.PerlinNoise(Mathf.PerlinNoise(noiseX+noiser,noiseY+noiser), Mathf.PerlinNoise(noiseX + noiser, noiseY + noiser)) *terrainWorldHeight),power)/*Mathf.Pow((1* noiser + (0.5f * noiser*2) + (0.25f * noiser*4)) /(1f + 0.5f + 0.25f),power)*/;
                 Xe += 1;
                 planeY++;
             }
@@ -65,14 +65,15 @@ public class TerrainGenerator : MonoBehaviour
 
         for (int i = 0; i < vertices.Length; i++)
         {
-            if (vertices[i].y < terrainWorldHeight/2)
+            if (vertices[i].y < 0.1)
             {
-                colors[i] = Color.Lerp(Color.blue, Color.green, vertices[i].y);
+                colors[i] = Color.green;
             }
-            else if (vertices[i].y > terrainWorldHeight/2)
+            else if (vertices[i].y > terrainWorldHeight - terrainWorldHeight / 3)
             {
-                colors[i] = Color.Lerp(Color.green, Color.white, vertices[i].y*2);
+                colors[i] =Color.grey;
             }
+            else colors[i] = Color.green;
 
         }
             
