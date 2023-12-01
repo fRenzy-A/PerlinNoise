@@ -250,8 +250,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vertices: []
   indiVert: []
-  planeWidth: 100
-  planeHeight: 100
+  planeWidth: 200
+  planeHeight: 200
   terrainGenerator: {fileID: 992394252}
   theHeight: 2
 --- !u!33 &846652506
@@ -511,9 +511,13 @@ MonoBehaviour:
   mesh: {fileID: 846652508}
   xRan: 0
   yRan: 0
-  scale: 0
+  scale: 1
   octave: 0
-  power: 0
+  power: 5
+  freq1: 1
+  freq2: 0.5
+  freq3: 0.25
+  freq4: 0
   terrainWorldHeight: 4
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
