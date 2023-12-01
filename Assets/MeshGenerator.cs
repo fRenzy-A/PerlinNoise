@@ -22,7 +22,7 @@ public class MeshGenerator : MonoBehaviour
 
     public TerrainGenerator terrainGenerator;
 
-    public float  theHeight;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -79,8 +79,9 @@ public class MeshGenerator : MonoBehaviour
         mesh.triangles = triangles;
         terrainGenerator.AddTerrainColor(vertices, mesh);
         mesh.RecalculateNormals();
+     
 
-        
+
     }
 
     // Update is called once per frame
