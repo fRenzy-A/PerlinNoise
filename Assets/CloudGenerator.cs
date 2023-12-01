@@ -1,16 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditorInternal;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class CloudGenerator : MonoBehaviour
 {
 
     
     public float scale;
-    public float octave;
     public float power;
     public float freq1;
     public float freq2;

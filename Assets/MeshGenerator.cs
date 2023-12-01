@@ -15,7 +15,6 @@ public class MeshGenerator : MonoBehaviour
     int[] triangles;
 
     public List<Vector3> indiVert = new();
-    public List<int[]> indiTri = new List<int[]>();
 
     public int planeWidth;
     public int planeHeight;
@@ -28,8 +27,6 @@ public class MeshGenerator : MonoBehaviour
     {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
-        
-        //terrainGenerator = gameObject.GetComponent<TerrainGenerator>();
     }
 
     public void CreatePlane()
@@ -39,8 +36,6 @@ public class MeshGenerator : MonoBehaviour
         {
             for (int y = 0; y <= planeHeight; y++)
             {
-
-                //theHeight = terrainGenerator.terrainWorldHeight;
                 indiVert.Add(new Vector3(y, 0, x));
             }
 

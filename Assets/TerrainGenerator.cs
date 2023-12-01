@@ -11,12 +11,7 @@ public class TerrainGenerator : MonoBehaviour
     public MeshGenerator meshGenerator;
     public Renderer mesh;
 
-
-    public float xRan;
-    public float yRan;
-
     public float scale;
-    public float octave;
     public float power;
     public float freq1;
     public float freq2;
